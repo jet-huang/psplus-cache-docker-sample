@@ -14,12 +14,12 @@ SOLACE_IS_CONFIGURED=0
 echo "Initialize configuration of instances on" `date`
 echo "Initialize configuration of instances on" `date` > $SOLACE_CACHE_CONFIG_LOG
 strDateSerial=$(date +"%Y%m%d%H%M%S")
+source $SOLACE_INSTALL_DIR/SolaceCache/instances.sh
 
 if [ $SOLACE_IS_CONFIGURED = "0" ]
 then
     echo "The configuration for PSCache is not here, generating now..."
     echo "The configuration for PSCache is not here, generating now..." >> $SOLACE_CACHE_CONFIG_LOG
-    source $SOLACE_INSTALL_DIR/SolaceCache/instances.sh
     ## I don't check if there is no instance defined yet...
     iIndex=0
     echo "Get $iInstanceNum instances to generate, serial is $strDateSerial"
