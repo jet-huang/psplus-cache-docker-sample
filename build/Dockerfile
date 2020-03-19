@@ -12,6 +12,7 @@ RUN tar zxvf ./SolaceCache_Linux26-x86_64_opt_${SOLACECACHE_VER}.tar.gz
 
 RUN mkdir -p ${SOLACE_INSTALL_DIR}
 COPY ./startCache.sh ${SOLACE_INSTALL_DIR}
+RUN chmod +x ${SOLACE_INSTALL_DIR}/startCache.sh
 
 RUN mv ./solclient-${SOLCLIENT_VER} ${SOLACE_INSTALL_DIR}/solclient
 RUN mv ./SolaceCache ${SOLACE_INSTALL_DIR}/SolaceCache
