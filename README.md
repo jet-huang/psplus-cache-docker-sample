@@ -30,7 +30,7 @@ Run PS+ Cache instances with Docker.
 ```shell
 # Make the physical hostname available to the container. This is optional but may be useful.
 export HOST
-docker-compose -p poc-solace up
+docker-compose -p poc-solace up --build
 ```
 
 ## Example of __instances.sh__
