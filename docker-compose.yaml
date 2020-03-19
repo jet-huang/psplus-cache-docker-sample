@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+  cacheinstance:
+    build: ./build
+    image: solacese/psplus-cache:1.0
+    #container_name: dev-cache01-g1
+    restart: always
+    networks:
+      - private
+    environment:
+      REALHOSTNAME: "${HOST}"
+    volumes:
+      #- ./stuff/config:/usr/local/solace/SolaceCache/config:ro
+      - ./stuff/template.conf:/usr/local/solace/SolaceCache/template.conf:ro
+      - ./stuff/instances.sh:/usr/local/solace/SolaceCache/instances.sh:ro
+
+networks:
+  private:
