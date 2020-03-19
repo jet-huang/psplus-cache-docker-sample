@@ -2,6 +2,7 @@
 SOLACE_INSTALL_DIR=/usr/local/solace
 SOLACE_CACHE_CONFIG_DIR=$SOLACE_INSTALL_DIR/SolaceCache/config
 SOLACE_CACHE_CONFIG_TEMPLATE=$SOLACE_INSTALL_DIR/SolaceCache/template.conf
+SOLACE_CACHE_SERIAL=$SOLACE_INSTALL_DIR/SolaceCache/dateSerial.txt
 SOLACE_CACHE_CONFIG_LOG=/tmp/cacheConfig.log
 SOLACE_CACHE_INSTANCE_LOG=/tmp/cacheInstance.log
 SOLACE_IS_CONFIGURED=0
@@ -13,7 +14,6 @@ SOLACE_IS_CONFIGURED=0
 
 echo "Initialize configuration of instances on" `date`
 echo "Initialize configuration of instances on" `date` > $SOLACE_CACHE_CONFIG_LOG
-strDateSerial=$(date +"%Y%m%d%H%M%S")
 source $SOLACE_INSTALL_DIR/SolaceCache/instances.sh
 
 if [ $SOLACE_IS_CONFIGURED = "0" ]
@@ -22,6 +22,8 @@ then
     echo "The configuration for PSCache is not here, generating now..." >> $SOLACE_CACHE_CONFIG_LOG
     ## I don't check if there is no instance defined yet...
     iIndex=0
+    strDateSerial=$(date +"%Y%m%d%H%M%S")
+    echo $strDateSerial > $SOLACE_CACHE_SERIAL
     echo "Get $iInstanceNum instances to generate, serial is $strDateSerial"
     echo "Get $iInstanceNum instances to generate, serial is $strDateSerial" >> $SOLACE_CACHE_CONFIG_LOG
     for i in `seq 1 1 $iInstanceNum`
@@ -56,6 +58,7 @@ export LD_LIBRARY_PATH=$SOLACE_INSTALL_DIR/SolaceCache/lib:$SOLACE_INSTALL_DIR/s
 echo Start SolaceCache on `date`
 echo Start SolaceCache on `date` > $SOLACE_CACHE_INSTANCE_LOG
 iIndex=0
+strDateSerial=`cat $SOLACE_CACHE_SERIAL`
 for instanceConfig in "$SOLACE_INSTALL_DIR/SolaceCache/config"/*
 do
     strCurrHost=${aSessionHost[$iIndex]}
